@@ -73,6 +73,7 @@
     <Compile Include="Data\Tick.cs">
       <DependentUpon>Portfolio.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\PortfolioItem.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
