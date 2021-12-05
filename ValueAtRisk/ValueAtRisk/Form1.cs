@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,13 @@ namespace ValueAtRisk
 
             CreatePortfolio();
             CalculateProfit();
+
+            Btn_SaveToFile.Click += Btn_SaveToFile_Click;
+        }
+
+        private void Btn_SaveToFile_Click(object sender, EventArgs e)
+        {
+            SaveToFile();
         }
 
         private void CreatePortfolio()
@@ -71,6 +79,22 @@ namespace ValueAtRisk
 
             var ProfitOrdered = (from x in Profit orderby x select x).ToList();
             MessageBox.Show(ProfitOrdered[ProfitOrdered.Count() / 5].ToString(), "Profit", MessageBoxButtons.OK);
+        }
+        private void SaveToFile()
+        {
+            using (SaveFileDialog s = new SaveFileDialog() { Filter = "Text files | *.txt" })
+            {
+                if (s.ShowDialog() == DialogResult.OK)
+                {
+                    StreamWriter sw = new StreamWriter(s.FileName);
+                    sw.WriteLine("Időszak, Nyereség");
+                    for (int i = 0; i < Profit.Count; i++)
+                    {
+                        sw.WriteLine(i + "," + Profit[i]);
+                    }
+                    sw.Close();
+                }
+            }
         }
     }
 }
